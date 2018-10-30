@@ -1,0 +1,74 @@
+version: '3'
+
+services:
+
+  mysqldb_ruby:
+    image: mysql:5.7
+    container_name: mysqldb_ruby
+    ports:
+    - "3305:3306"
+    environment:
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_DATABASE=backend
+    networks: ['stack']
+
+  mysqldb_ruby_test:
+    image: mysql:5.7
+    container_name: mysqldb_ruby_test
+    ports:
+    - "3304:3306"
+    environment:
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_DATABASE=api_test
+    networks: ['stack']
+
+  api_ruby:
+    image: ruby-api:latest
+    build:
+      context: api/
+      dockerfile: Dockerfile
+    container_name: api_ruby
+    volumes:
+    - ./api:/app
+    ports:
+    - "8000:3000"
+    depends_on:
+    - mysqldb_ruby
+    - mysqldb_ruby_test
+    networks: ['stack']
+    command: sh -c "sleep 20 && rails db:migrate && rm tmp/pids/server.pid  && rails server"
+
+  scrapy_app:
+    image: scrapy:latest
+    build:
+      context: scrapy_app
+      dockerfile: Dockerfile
+    container_name: scrapy_app
+    volumes:
+    - ./scrapy_app/:/app
+    depends_on:
+    - api_ruby
+    networks: ['stack']
+    command: sh -c "tail -f /var/log/scrapy.log"
+
+  react_front_ruby:
+    image: react_front_ruby:latest
+    build:
+      context: front-end/
+      dockerfile: Dockerfile
+    container_name: react_front_ruby
+    volumes:
+    - ./front-end:/app
+    ports:
+    - "3000:3000"
+    depends_on:
+    - mysqldb_ruby
+    - api_ruby
+    networks: ['stack']
+    command: sh -c "npm start"
+
+
+
+networks:
+  stack:
+    driver: bridge
