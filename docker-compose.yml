@@ -49,7 +49,7 @@ services:
     depends_on:
     - api_ruby
     networks: ['stack']
-    command: sh -c "tail -f /var/log/scrapy.log"
+    command: sh -c " cron start && tail -f /var/log/scrapy.log"
 
   react_front_ruby:
     image: react_front_ruby:latest

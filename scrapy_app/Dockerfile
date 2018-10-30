@@ -1,7 +1,7 @@
 FROM badouralix/python-scrapy:latest
 
 RUN apt-get update
-RUN apt-get install -y git cron
+RUN apt-get install -y vim git cron procps
 RUN pip install requests
 
 RUN mkdir -p /app

@@ -5,7 +5,7 @@ FactoryBot.define do
     category { "MyString" }
     start_date { "2018-10-29" }
     end_date { "2018-10-29" }
-    link { "" }
     web_source { "MyString" }
+    sequence(:link) { |n| "event#{n}" }
   end
 end

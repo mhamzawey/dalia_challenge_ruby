@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'swagger_helper'
 
 RSpec.describe 'Events API', type: :request do
   # initialize test data
@@ -14,7 +13,7 @@ RSpec.describe 'Events API', type: :request do
     it 'returns events' do
       # Note `json` is a custom helper to parse JSON responses
       expect(json).not_to be_empty
-      expect(json.size).to eq(10)
+      expect(json['data'].size).to eq(10)
     end
 
     it 'returns status code 200' do
@@ -29,7 +28,7 @@ RSpec.describe 'Events API', type: :request do
     context 'when the record exists' do
       it 'returns the event' do
         expect(json).not_to be_empty
-        expect(json['id']).to eq(event_id)
+        expect(json['data']['id']).to eq(event_id.to_s)
       end
 
       it 'returns status code 200' do
@@ -59,7 +58,7 @@ RSpec.describe 'Events API', type: :request do
       before { post '/events', params: valid_attributes }
 
       it 'creates a event' do
-        expect(json['title']).to eq('test title')
+        expect(json['data']['attributes']['title']).to eq('test title')
       end
 
       it 'returns status code 201' do
