@@ -52,7 +52,7 @@ Project consists of **Five** docker contaiers:
             - We have one main filters in this api:
                 -starts_with:
                     - Responsible for filtering using title
-            - Test case: added 16 test cases for retrieval CRUD events
+            - Test cases: added 16 test cases for testing CRUD events
             - To run test case manually : `docker exec -it api_ruby  bundle exec rspec`
 
 
