@@ -54,6 +54,7 @@ Project consists of **Five** docker contaiers:
                     - Responsible for filtering using title
             - Test cases: added 16 test cases for testing CRUD events
             - To run test case manually : `docker exec -it api_ruby  bundle exec rspec`
+            - Can be automated using any ci/cd over Gitlab CI/CD, Jenkins, or Github Cirrus
 
 
 **2- scrappy_app:**
