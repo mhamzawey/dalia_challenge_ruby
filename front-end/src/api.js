@@ -14,7 +14,7 @@ export const getEvents = (page) => {
 
 export const getSeachEvent = (searchterm) => {
     return new Promise((resolve, reject) => {
-        return axios.get(BASE_URL+events_url+"?starts_with="+searchterm)
+        return axios.get(BASE_URL+events_url+"?contains="+searchterm)
             .then((res) => resolve(res));
     })
         .catch(err => console.log(err));

@@ -47,6 +47,6 @@ class EventsController < ApplicationController
   end
 
   def filtering_params(params)
-    params.slice(:contains, :starts_with)
+    params.slice(:contains)
   end
 end

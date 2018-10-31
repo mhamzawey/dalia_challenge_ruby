@@ -83,7 +83,7 @@ export class EventTable extends React.Component {
 
     handleInputChange = () => {
 
-        if (this.search.value.length >=3){
+        if (this.search.value.length >=2){
 
             getSeachEvent(this.search.value).then(res => this.setState({_events:res.data.data, pages:(Math.ceil(res.data.meta.records/10))}))
                 .catch(err => alert("An error occurred"));
